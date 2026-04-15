@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar item</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container">
+        <header class="page-header">
+            <h1>Editar item</h1>
+            <p th:text="${item.nombre}"></p>
+        </header>
+
+        <section class="card">
+            <form th:action="@{/items/{itemId}/editar(itemId=${item.id})}" method="post" class="drop-form">
+
+                <div class="form-group">
+                    <label for="nombre">Nombre del item</label>
+                    <input type="text" id="nombre" name="nombre" th:value="${item.nombre}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <input type="text" id="categoria" name="categoria" th:value="${item.categoria}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="marca">Marca</label>
+                    <input type="text" id="marca" name="marca" th:value="${item.marca}">
+                </div>
+
+                <div class="form-group">
+                    <label for="costo">Costo</label>
+                    <input type="number" id="costo" name="costo" step="0.01" th:value="${item.costo}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="number" id="precio" name="precio" step="0.01" th:value="${item.precio}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select id="estado" name="estado" required>
+                        <option value="DISPONIBLE" th:selected="${item.estado == 'DISPONIBLE'}">DISPONIBLE</option>
+                        <option value="VENDIDO" th:selected="${item.estado == 'VENDIDO'}">VENDIDO</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary">Guardar cambios</button>
+
+                <a th:href="@{/drops/{id}(id=${item.drop.id})}" class="btn-secondary" style="display:inline-block; text-decoration:none; margin-left:10px;">
+                    Cancelar
+                </a>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BoomDrops</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+
+    <header class="page-header">
+        <h1>BoomDrops</h1>
+        <p>Gestión de drops.</p>
+    </header>
+
+    <section class="card">
+        <h2>Dashboard general</h2>
+
+        <section class="card" th:if="${mejorDropRoi != null}">
+            <h2>Mejor drop por ROI</h2>
+
+            <p><strong>Drop:</strong> <span th:text="${mejorDropRoi.nombre}"></span></p>
+            <p><strong>Fecha:</strong> <span th:text="${mejorDropRoi.fecha}"></span></p>
+            <p>
+                <strong>ROI real:</strong>
+                <span th:text="${#numbers.formatDecimal(mejorRoiReal, 1, 2)}"></span>%
+            </p>
+        </section>
+
+        <div class="stats-grid">
+            <div class="stat-card stat-dark">
+                <span class="stat-label">Inversión total</span>
+                <h3>₡<span th:text="${inversionTotalGeneral}"></span></h3>
+            </div>
+
+            <div class="stat-card stat-blue">
+                <span class="stat-label">Valor inventario</span>
+                <h3>₡<span th:text="${valorInventarioGeneral}"></span></h3>
+            </div>
+
+            <div class="stat-card stat-green">
+                <span class="stat-label">Ventas reales</span>
+                <h3>₡<span th:text="${ventasRealesGeneral}"></span></h3>
+            </div>
+
+            <div class="stat-card stat-purple">
+                <span class="stat-label">Ganancia potencial</span>
+                <h3>₡<span th:text="${gananciaPotencialGeneral}"></span></h3>
+            </div>
+
+            <div class="stat-card stat-emerald">
+                <span class="stat-label">Ganancia real</span>
+                <h3>₡<span th:text="${gananciaRealGeneral}"></span></h3>
+            </div>
+
+            <div class="stat-card stat-gray">
+                <span class="stat-label">Items disponibles</span>
+                <h3><span th:text="${disponiblesGeneral}"></span></h3>
+            </div>
+
+            <div class="stat-card stat-red">
+                <span class="stat-label">Items vendidos</span>
+                <h3><span th:text="${vendidosGeneral}"></span></h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Buscar drop</h2>
+
+        <form action="/drops" method="get" class="drop-form">
+            <div class="form-group">
+                <label for="buscar">Nombre del drop</label>
+                <input type="text" id="buscar" name="buscar" placeholder="Ej: Drop 1" th:value="${buscar}">
+            </div>
+
+            <button type="submit" class="btn-primary">Buscar</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Crear nuevo drop</h2>
+
+        <form action="/drops" method="post" class="drop-form">
+            <div class="form-group">
+                <label>Nombre del drop</label>
+                <input type="text" name="nombre" placeholder="Ej: Drop 5" required>
+            </div>
+
+            <div class="form-group">
+                <label>Fecha</label>
+                <input type="date" name="fecha" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Guardar drop</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Lista de drops</h2>
+
+        <div th:if="${#lists.isEmpty(drops)}">
+            Aún no hay drops registrados.
+        </div>
+
+        <div class="drop-list" th:if="${not #lists.isEmpty(drops)}">
+            <div class="drop-item" th:each="drop : ${drops}">
+                <a th:href="@{/drops/{id}(id=${drop.id})}" class="drop-link">
+                    <div>
+                        <h3 th:text="${drop.nombre}"></h3>
+                        <p th:text="${drop.fecha}"></p>
+                    </div>
+                </a>
+
+                <form th:action="@{/drops/{id}/eliminar(id=${drop.id})}" method="post">
+                    <button type="submit" class="btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="card" th:if="${not #lists.isEmpty(topDrops)}">
+        <h2>Top drops</h2>
+
+        <div class="drop-list">
+            <div class="drop-item" th:each="topDrop, stat : ${topDrops}">
+                <h3>
+                    #<span th:text="${stat.count}"></span>
+                    <span th:text="${topDrop.nombre}"></span>
+                </h3>
+
+                <p><strong>Fecha:</strong> <span th:text="${topDrop.fecha}"></span></p>
+                <p>
+                    <strong>ROI real:</strong>
+                    <span th:text="${#numbers.formatDecimal(topDrop.roiReal, 1, 2)}"></span>%
+                </p>
+                <p>
+                    <strong>Ganancia real:</strong>
+                    ₡<span th:text="${#numbers.formatDecimal(topDrop.gananciaReal, 1, 2)}"></span>
+                </p>
+                <p>
+                    <strong>% vendido:</strong>
+                    <span th:text="${#numbers.formatDecimal(topDrop.porcentajeVendido, 1, 2)}"></span>%
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card" th:if="${not #maps.isEmpty(topCategorias) or not #maps.isEmpty(topMarcas)}">
+        <h2>Análisis de productos</h2>
+
+        <div class="stats-grid">
+            <div class="card">
+                <h3>Top categorías</h3>
+                <ul th:if="${not #maps.isEmpty(topCategorias)}">
+                    <li th:each="entry : ${topCategorias}">
+                        <strong th:text="${entry.key}"></strong> -
+                        <span th:text="${entry.value}"></span> items
+                    </li>
+                </ul>
+                <p th:if="${#maps.isEmpty(topCategorias)}">Aún no hay categorías registradas.</p>
+            </div>
+
+            <div class="card">
+                <h3>Top marcas</h3>
+                <ul th:if="${not #maps.isEmpty(topMarcas)}">
+                    <li th:each="entry : ${topMarcas}">
+                        <strong th:text="${entry.key}"></strong> -
+                        <span th:text="${entry.value}"></span> items
+                    </li>
+                </ul>
+                <p th:if="${#maps.isEmpty(topMarcas)}">Aún no hay marcas registradas.</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

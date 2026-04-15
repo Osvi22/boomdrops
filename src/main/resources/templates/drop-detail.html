@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Drop</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container">
+        <header class="page-header">
+            <h1 th:text="${drop.nombre}">Nombre del drop</h1>
+            <p>Fecha: <span th:text="${drop.fecha}"></span></p>
+        </header>
+
+        <section class="card">
+            <h2>Resumen del drop</h2>
+
+            <p><strong>Inversión total:</strong> ₡<span th:text="${inversionTotal}"></span></p>
+            <p><strong>Valor inventario:</strong> ₡<span th:text="${valorInventario}"></span></p>
+            <p><strong>Ventas reales:</strong> ₡<span th:text="${ventasReales}"></span></p>
+            <p><strong>Ganancia potencial:</strong> ₡<span th:text="${gananciaPotencial}"></span></p>
+            <p><strong>Ganancia real:</strong> ₡<span th:text="${gananciaReal}"></span></p>
+            
+            <p><strong>ROI potencial:</strong> 
+    <span th:text="${#numbers.formatDecimal(roiPotencial, 1, 2)}"></span>%
+</p>
+
+<p><strong>ROI real:</strong> 
+    <span th:text="${#numbers.formatDecimal(roiReal, 1, 2)}"></span>%
+</p>
+
+<p><strong>% vendido del drop:</strong> <span th:text="${#numbers.formatDecimal(porcentajeVendido, 1, 2)}"></span>%</p>
+            
+            <p><strong>Items disponibles:</strong> <span th:text="${disponibles}"></span></p>
+            <p><strong>Items vendidos:</strong> <span th:text="${vendidos}"></span></p>
+        </section>
+
+        <section class="card">
+            <h2>Agregar item</h2>
+
+            <form th:action="@{/drops/{id}/items(id=${drop.id})}" method="post" class="drop-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre del item</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ej: Nike hoodie, Nascar..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <input type="text" id="categoria" name="categoria" placeholder="Ej: Hoodie, Jacket, Tee..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="marca">Marca</label>
+                    <input type="text" id="marca" name="marca" placeholder="Ej: Nike, Adidas, Carhartt...">
+                </div>
+
+                <div class="form-group">
+                    <label for="costo">Costo</label>
+                    <input type="number" id="costo" name="costo" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="number" id="precio" name="precio" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select id="estado" name="estado" required>
+                        <option value="DISPONIBLE">DISPONIBLE</option>
+                        <option value="VENDIDO">VENDIDO</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary">Guardar item</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Items del drop</h2>
+
+            <div th:if="${#lists.isEmpty(drop.items)}" class="empty-state">
+                Este drop aún no tiene items registrados.
+            </div>
+
+            <div class="drop-list" th:if="${not #lists.isEmpty(drop.items)}">
+               <div th:each="item : ${drop.items}"
+     class="drop-item"
+     th:classappend="${item.estado == 'VENDIDO'} ? ' item-vendido' : ' item-disponible'">
+    <div>
+        <h3 th:text="${item.nombre}"></h3>
+        <p>
+            Costo: ₡<span th:text="${item.costo}"></span> |
+            Precio: ₡<span th:text="${item.precio}"></span> |
+            Estado: <span th:text="${item.estado}"></span>
+        </p>
+        <p>
+            Categoría: <span th:text="${item.categoria}"></span> |
+            Marca: <span th:text="${item.marca}"></span>
+        </p>
+        <p th:if="${item.fechaVenta != null}">
+    Fecha de venta: <span th:text="${item.fechaVenta}"></span>
+</p>
+
+        <form th:action="@{/items/{itemId}/toggle-estado(itemId=${item.id})}" method="post" style="margin-top: 12px;">
+            <button type="submit" class="btn-primary"
+                th:text="${item.estado == 'DISPONIBLE'} ? 'Marcar como vendido' : 'Marcar como disponible'">
+            </button>
+        </form>
+
+        <a th:href="@{/items/{itemId}/editar(itemId=${item.id})}" class="btn-secondary" style="display:inline-block; text-decoration:none; margin-top: 10px;">
+            Editar item
+        </a>
+
+        <form th:action="@{/items/{itemId}/eliminar(itemId=${item.id})}" method="post" style="margin-top: 10px;">
+            <button type="submit" class="btn-danger">Eliminar item</button>
+        </form>
+    </div>
+</div>
+            </div>
+        </section>
+
+        <a href="/drops" class="btn-primary" style="display:inline-block; text-decoration:none; margin-top: 10px;">
+            Volver
+        </a>
+    </div>
+</body>
+</html>

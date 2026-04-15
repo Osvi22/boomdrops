@@ -1,0 +1,258 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #1f2937;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    margin-bottom: 18px;
+    font-size: 22px;
+}
+
+.drop-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.form-group input {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #111827;
+}
+
+.btn-primary {
+    background-color: #111827;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.btn-primary:hover {
+    opacity: 0.92;
+}
+
+.drop-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.drop-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px;
+    background-color: #fafafa;
+}
+
+.drop-item h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.drop-item p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.empty-state {
+    padding: 18px;
+    border-radius: 10px;
+    background-color: #f9fafb;
+    color: #6b7280;
+    border: 1px dashed #d1d5db;
+}
+
+.drop-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.drop-link .drop-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: 0.2s ease;
+}
+
+.drop-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.drop-link .drop-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: 0.2s ease;
+}
+
+.form-group select {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: #111827;
+}
+
+.item-disponible {
+    border-left: 6px solid #16a34a;
+    background-color: #f0fdf4;
+}
+
+.item-vendido {
+    border-left: 6px solid #dc2626;
+    background-color: #fef2f2;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.btn-danger:hover {
+    opacity: 0.92;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.stat-card {
+    border-radius: 14px;
+    padding: 18px;
+    color: white;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h3 {
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.stat-label {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.stat-dark {
+    background-color: #111827;
+}
+
+.stat-blue {
+    background-color: #2563eb;
+}
+
+.stat-green {
+    background-color: #16a34a;
+}
+
+.stat-purple {
+    background-color: #7c3aed;
+}
+
+.stat-emerald {
+    background-color: #059669;
+}
+
+.stat-gray {
+    background-color: #4b5563;
+}
+
+.stat-red {
+    background-color: #dc2626;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+
+    .btn-secondary {
+    background-color: #374151;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.btn-secondary:hover {
+    opacity: 0.92;
+}
+}
